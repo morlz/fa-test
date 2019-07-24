@@ -1,0 +1,34 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"sourceMap": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"target": "es5",
+		"baseUrl": "./src",
+		"allowSyntheticDefaultImports": true,
+		"downlevelIteration": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"outDir": "./dist/ts/",
+		"paths": {
+			"@/*": [
+				"./*"
+			],
+			"pages/*": [
+				"./pages/*"
+			],
+			"layouts/*": [
+				"./layouts/*"
+			]
+		},
+		"typeRoots": [
+			"node_modules/@types",
+			"src/@types"
+		]
+	},
+	
+	"include": [
+		"./src/**/*"
+	]
+}
