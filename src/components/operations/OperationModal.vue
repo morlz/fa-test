@@ -40,10 +40,9 @@
 
 				<q-input
 					:label="$t('opModal.date')"
-					:rules="['date']"
 					mask="date"
 					outlined
-					v-model="form.date"
+					v-model="date"
 				>
 					<template v-slot:append>
 						<q-icon
@@ -55,10 +54,7 @@
 								transition-hide="scale"
 								transition-show="scale"
 							>
-								<q-date
-									@input="() => $refs.qDateProxy.hide()"
-									v-model="form.date"
-								/>
+								<q-date v-model="date" />
 							</q-popup-proxy>
 						</q-icon>
 					</template>
@@ -127,7 +123,7 @@ const form: Operation = {
 }
 
 @Component
-export default class OperationList extends Vue {
+export default class OperationModal extends Vue {
 
 	form = { ...form }
 
@@ -200,6 +196,32 @@ export default class OperationList extends Vue {
 		return textColors[this.form.assessment]
 	}
 
+	get date (): string {
+		if (!this.form.date)
+			return ''
+
+		const {
+			year,
+			month,
+			day
+		} = this.form.date
+
+		return [year, day, month].join('/')
+	}
+
+
+	set date (value: string) {
+		const [year, month, day] = value.split('/').map(Number)
+
+		// @ts-ignore ....
+		this.$refs.qDateProxy.hide()
+
+		this.form.date = {
+			year,
+			day,
+			month,
+		}
+	}
 }
 </script>
 

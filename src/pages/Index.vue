@@ -29,7 +29,7 @@
 			</q-btn>
 		</div>
 
-		<operation-list :content="cachedOperations" />
+		<operation-list :content="filtredOperations" />
 
 		<loading :value="loadingOperations" />
 
@@ -50,6 +50,7 @@ import OperationList from '../components/operations/OperationList.vue'
 import OperationModal from '../components/operations/OperationModal.vue'
 import { Operation, Crop, CropType } from '../models'
 import store from '../store'
+import moment from 'moment'
 
 const operations = namespace('operations')
 
@@ -78,6 +79,18 @@ export default class PageIndex extends Vue {
 	@operations.State(state => state.loading.operations) loadingOperations: boolean
 	@operations.State(state => state.cached.operations) cachedOperations: Operation[]
 	@operations.Action addOperation: (form) => Promise<void>
+
+	get filtredOperations () {
+		const fn = this.currentTab == 'ready'
+			? 'isBefore'
+			: 'isAfter'
+
+		const now = moment()
+
+		return this.cachedOperations.filter(op => {
+			return moment(op.date)[fn](now)
+		})
+	}
 
 	private onOperationAdd (form) {
 		this.operationModal = false

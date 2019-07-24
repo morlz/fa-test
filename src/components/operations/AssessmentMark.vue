@@ -12,7 +12,7 @@ import { colors } from './colors'
 
 
 @Component
-export default class OperationList extends Vue {
+export default class OperationMark extends Vue {
 
 	@Prop({
 		required: true,
